@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        @import url(http://fonts.googleapis.com/css?family=Merriweather);
+        body {
+            background: linear-gradient(to bottom, rgba(218, 11, 11, 0.1), rgb(20, 197, 197));
+        }
+
+        * {
+            font-family: Merriweather, 'Arial Narrow', Arial, sans-serif;
+        }
+
+        div {
+            min-height: 100vh;
+            display: grid;
+            text-align: center;
+            grid-gap: 20px;
+            justify-content: center;
+            align-content: center;
+            color: #fff;
+        }
+
+        #number {
+            width: 300px;
+            height: 30px;
+            margin-right: 10px;
+            padding: 5px;
+            border: 1px solid rgb(20, 197, 197);
+            border-radius: 10px;
+            outline: none;
+            background-color: transparent;
+            color: #fff;
+        }
+
+        #number[placeholder] {
+            color: #fff;
+            font-size: 20px;
+        }
+
+        #button {
+            width: 120px;
+            height: 42px;
+            padding: 5px;
+            border: 1px solid rgb(20, 197, 197);
+            background-color: transparent;
+            border-radius: 10px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: 900;
+            outline: none;
+        }
+
+        #button:hover {
+            background-color: rgb(20, 197, 197);
+        }
+
+        .year {
+            max-width: 500px;
+            min-height: 50px;
+            margin-left: auto;
+            margin-right: auto;
+            display: grid;
+            justify-content: center;
+            align-items: center;
+            background-color: rgb(20, 197, 197);
+            border: 1px solid rgb(20, 197, 197);
+            border-radius: 10px;
+            font-size: 28px;
+            font-weight: 900;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        h3 {
+            color: #fff;
+        }
+
+        p {
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <form>
+            <input type="number" name="number" id="number" placeholder="Type your age...!">
+            <input type="button" value="Find Year" id="button">
+            <p id="year" class="hide"></p>
+        </form>
+        <p>simple app with pure Javascript to tell your birth year by calculating it after getting your age.
+            <br> with a little fun with type writer function.
+        </p>
+        <h3>Created with
+            <3</h3>
+    </div>
+</body>
+
+<script>
+    const year = document.querySelector('#year');
+    const button = document.querySelector('#button');
+    const number = document.querySelector('#number');
+    const date = new Date().getFullYear();
+
+    function createAge() {
+        if (number.value == '' || number.value == 0 || number.value < 0) {
+            window.alert('Please Type Your Age!!!');
+            return undefined;
+        }
+        const birthYear = date - number.value;
+        year.classList.remove('hide');
+        year.classList.add('year');
+
+        let text = `Your birth year is ${birthYear}`,
+            i = 0;
+        const typerWriter = setInterval(function () {
+            year.textContent += text[i];
+            i += 1;
+            if (i > text.length - 1) {
+                clearInterval(typerWriter);
+            }
+        }, 50);
+        year.innerHTML = '';
+    }
+    button.addEventListener('click', createAge);
+
+    number.addEventListener('focus', function () {
+        this.setAttribute('data-place', this.getAttribute('placeholder'));
+        this.setAttribute('placeholder', '');
+    });
+    number.addEventListener('blur', function () {
+        this.setAttribute('placeholder', this.getAttribute('data-place'));
+    });
+</script>
+
+</html>
